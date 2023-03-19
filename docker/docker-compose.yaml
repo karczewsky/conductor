@@ -9,8 +9,6 @@ services:
     build:
       context: ../
       dockerfile: docker/server/Dockerfile
-    networks:
-      - internal
     ports:
       - 8080:8080
     healthcheck:
@@ -43,12 +41,8 @@ services:
     build:
       context: ../
       dockerfile: docker/ui/Dockerfile
-    networks:
-      - internal
     ports:
       - 5000:5000
-    links:
-      - conductor-server
     stdin_open: true
 
   redis:
@@ -70,8 +64,6 @@ services:
       - xpack.security.enabled=false
     volumes:
       - esdata-conductor:/usr/share/elasticsearch/data
-    networks:
-      - internal
     ports:
       - 9200:9200
       - 9300:9300
@@ -107,6 +99,3 @@ services:
 volumes:
   esdata-conductor:
     driver: local
-
-networks:
-  internal:
